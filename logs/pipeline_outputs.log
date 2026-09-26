@@ -1,0 +1,361 @@
+Commencing model training pipeline construction: 
+
+Initializing seed to 42 for reproducibilty ... 
+
+Reading in the dataset ... 
+
+
+ cols(
+   DATE = col_character(),
+   RENTED_BIKE_COUNT = col_double(),
+   HOUR = col_double(),
+   TEMPERATURE = col_double(),
+   HUMIDITY = col_double(),
+   WIND_SPEED = col_double(),
+   VISIBILITY = col_double(),
+   DEW_POINT_TEMPERATURE = col_double(),
+   SOLAR_RADIATION = col_double(),
+   RAINFALL = col_double(),
+   SNOWFALL = col_double(),
+   SEASONS = col_character(),
+   HOLIDAY = col_character(),
+   FUNCTIONING_DAY = col_character(),
+   SEASONS_AUTUMN = col_double(),
+   SEASONS_SPRING = col_double(),
+   SEASONS_SUMMER = col_double(),
+   SEASONS_WINTER = col_double(),
+   HOLIDAY_HOLIDAY = col_double(),
+   HOLIDAY_NO_HOLIDAY = col_double(),
+   HOUR_0 = col_double(),
+   HOUR_1 = col_double(),
+   HOUR_2 = col_double(),
+   HOUR_3 = col_double(),
+   HOUR_4 = col_double(),
+   HOUR_5 = col_double(),
+   HOUR_6 = col_double(),
+   HOUR_7 = col_double(),
+   HOUR_8 = col_double(),
+   HOUR_9 = col_double(),
+   HOUR_10 = col_double(),
+   HOUR_11 = col_double(),
+   HOUR_12 = col_double(),
+   HOUR_13 = col_double(),
+   HOUR_14 = col_double(),
+   HOUR_15 = col_double(),
+   HOUR_16 = col_double(),
+   HOUR_17 = col_double(),
+   HOUR_18 = col_double(),
+   HOUR_19 = col_double(),
+   HOUR_20 = col_double(),
+   HOUR_21 = col_double(),
+   HOUR_22 = col_double(),
+   HOUR_23 = col_double()
+ ) 
+
+Performing feature selection ... 
+
+ RENTED_BIKE_COUNT      HOUR        TEMPERATURE        HUMIDITY     
+ Min.   :0.00000   Min.   : 0.00   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:0.05965   1st Qu.: 6.00   1st Qu.:0.3636   1st Qu.:0.4286  
+ Median :0.15194   Median :12.00   Median :0.5472   Median :0.5816  
+ Mean   :0.20460   Mean   :11.51   Mean   :0.5345   Mean   :0.5933  
+ 3rd Qu.:0.30445   3rd Qu.:18.00   3rd Qu.:0.7080   3rd Qu.:0.7551  
+ Max.   :1.00000   Max.   :23.00   Max.   :1.0000   Max.   :1.0000  
+   WIND_SPEED       VISIBILITY     DEW_POINT_TEMPERATURE SOLAR_RADIATION   
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000        Min.   :0.000000  
+ 1st Qu.:0.1216   1st Qu.:0.4602   1st Qu.:0.4412        1st Qu.:0.000000  
+ Median :0.2027   Median :0.8429   Median :0.6107        Median :0.002841  
+ Mean   :0.2332   Mean   :0.7131   Mean   :0.5977        Mean   :0.161326  
+ 3rd Qu.:0.3108   3rd Qu.:1.0000   3rd Qu.:0.7924        3rd Qu.:0.264205  
+ Max.   :1.0000   Max.   :1.0000   Max.   :1.0000        Max.   :1.000000  
+    RAINFALL          SEASONS            HOLIDAY          SEASONS_AUTUMN  
+ Min.   :0.000000   Length:8465        Length:8465        Min.   :0.0000  
+ 1st Qu.:0.000000   Class :character   Class :character   1st Qu.:0.0000  
+ Median :0.000000   Mode  :character   Mode  :character   Median :0.0000  
+ Mean   :0.004261                                         Mean   :0.2288  
+ 3rd Qu.:0.000000                                         3rd Qu.:0.0000  
+ Max.   :1.000000                                         Max.   :1.0000  
+ HOLIDAY_NO_HOLIDAY     HOUR_0            HOUR_8          HOUR_18      
+ Min.   :0.0000     Min.   :0.00000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:1.0000     1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000  
+ Median :1.0000     Median :0.00000   Median :0.0000   Median :0.0000  
+ Mean   :0.9518     Mean   :0.04158   Mean   :0.0417   Mean   :0.0417  
+ 3rd Qu.:1.0000     3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:0.0000  
+ Max.   :1.0000     Max.   :1.00000   Max.   :1.0000   Max.   :1.0000  
+    HOUR_23      
+ Min.   :0.0000  
+ 1st Qu.:0.0000  
+ Median :0.0000  
+ Mean   :0.0417  
+ 3rd Qu.:0.0000  
+ Max.   :1.0000   
+
+Performing feature engineering ... 
+
+Describing final dataset ... 
+
+ RENTED_BIKE_COUNT      HOUR        TEMPERATURE        HUMIDITY     
+ Min.   :0.00000   Min.   : 0.00   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:0.05965   1st Qu.: 6.00   1st Qu.:0.3636   1st Qu.:0.4286  
+ Median :0.15194   Median :12.00   Median :0.5472   Median :0.5816  
+ Mean   :0.20460   Mean   :11.51   Mean   :0.5345   Mean   :0.5933  
+ 3rd Qu.:0.30445   3rd Qu.:18.00   3rd Qu.:0.7080   3rd Qu.:0.7551  
+ Max.   :1.00000   Max.   :23.00   Max.   :1.0000   Max.   :1.0000  
+   WIND_SPEED       VISIBILITY     DEW_POINT_TEMPERATURE SOLAR_RADIATION   
+ Min.   :0.0000   Min.   :0.0000   Min.   :0.0000        Min.   :0.000000  
+ 1st Qu.:0.1216   1st Qu.:0.4602   1st Qu.:0.4412        1st Qu.:0.000000  
+ Median :0.2027   Median :0.8429   Median :0.6107        Median :0.002841  
+ Mean   :0.2332   Mean   :0.7131   Mean   :0.5977        Mean   :0.161326  
+ 3rd Qu.:0.3108   3rd Qu.:1.0000   3rd Qu.:0.7924        3rd Qu.:0.264205  
+ Max.   :1.0000   Max.   :1.0000   Max.   :1.0000        Max.   :1.000000  
+    RAINFALL          SEASONS            HOLIDAY          SEASONS_AUTUMN  
+ Min.   :0.000000   Length:8465        Length:8465        Min.   :0.0000  
+ 1st Qu.:0.000000   Class :character   Class :character   1st Qu.:0.0000  
+ Median :0.000000   Mode  :character   Mode  :character   Median :0.0000  
+ Mean   :0.004261                                         Mean   :0.2288  
+ 3rd Qu.:0.000000                                         3rd Qu.:0.0000  
+ Max.   :1.000000                                         Max.   :1.0000  
+ HOLIDAY_NO_HOLIDAY     HOUR_0            HOUR_8          HOUR_18      
+ Min.   :0.0000     Min.   :0.00000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:1.0000     1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000  
+ Median :1.0000     Median :0.00000   Median :0.0000   Median :0.0000  
+ Mean   :0.9518     Mean   :0.04158   Mean   :0.0417   Mean   :0.0417  
+ 3rd Qu.:1.0000     3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:0.0000  
+ Max.   :1.0000     Max.   :1.00000   Max.   :1.0000   Max.   :1.0000  
+    HOUR_23       TEMPERATURE_HUMIDITY TEMPERATURE_SOLAR  TEMPERATURE_RAINFALL
+ Min.   :0.0000   Min.   :0.0000       Min.   :0.000000   Min.   :0.000000    
+ 1st Qu.:0.0000   1st Qu.:0.1852       1st Qu.:0.000000   1st Qu.:0.000000    
+ Median :0.0000   Median :0.3125       Median :0.001515   Median :0.000000    
+ Mean   :0.0417   Mean   :0.3245       Mean   :0.104746   Mean   :0.002632    
+ 3rd Qu.:0.0000   3rd Qu.:0.4518       3rd Qu.:0.125755   3rd Qu.:0.000000    
+ Max.   :1.0000   Max.   :0.7677       Max.   :0.906434   Max.   :0.692308    
+ DEW_POINT_SPREAD   
+ Min.   :-0.211339  
+ 1st Qu.:-0.137186  
+ Median :-0.073015  
+ Mean   :-0.063183  
+ 3rd Qu.:-0.001815  
+ Max.   : 0.367556   
+
+Train/test splitting the dataset (75%/25%) ... 
+
+Training data dims: 6348 x 21 
+
+Testing data dims: 2117 x 21 
+
+Original data dims: 8465 x 21 
+
+Models instantiation ... 
+
+Fitting a linear regression model with weather features ... 
+
+
+Call:
+stats::lm(formula = RENTED_BIKE_COUNT ~ TEMPERATURE + HUMIDITY + 
+    WIND_SPEED + VISIBILITY + DEW_POINT_TEMPERATURE + SOLAR_RADIATION + 
+    RAINFALL, data = data)
+
+Coefficients:
+          (Intercept)            TEMPERATURE               HUMIDITY  
+             0.060194               0.568722              -0.301046  
+           WIND_SPEED             VISIBILITY  DEW_POINT_TEMPERATURE  
+             0.120395               0.002114               0.020523  
+      SOLAR_RADIATION               RAINFALL  
+            -0.113838              -0.541909  
+ 
+
+Fitting a linear regression model with weather features and polynomial terms ... 
+
+             Length Class      Mode
+lvl           0     -none-     NULL
+spec          7     linear_reg list
+fit          12     lm         list
+preproc       1     -none-     list
+elapsed       1     -none-     list
+censor_probs  0     -none-     list 
+
+Fitting a linear regression model with weather features, polynomial and engineered terms ... 
+
+             Length Class      Mode
+lvl           0     -none-     NULL
+spec          7     linear_reg list
+fit          12     lm         list
+preproc       1     -none-     list
+elapsed       1     -none-     list
+censor_probs  0     -none-     list 
+
+Fitting a linear regression model with all variables ... 
+
+
+Call:
+stats::lm(formula = RENTED_BIKE_COUNT ~ ., data = data)
+
+Coefficients:
+          (Intercept)                   HOUR            TEMPERATURE  
+             -0.22690                0.01015                0.53591  
+             HUMIDITY             WIND_SPEED             VISIBILITY  
+              0.06288                0.01455                0.02687  
+DEW_POINT_TEMPERATURE        SOLAR_RADIATION               RAINFALL  
+              0.41426                0.25120               -1.02678  
+        SEASONSSpring          SEASONSSummer          SEASONSWinter  
+             -0.04087               -0.01428               -0.09099  
+    HOLIDAYNo Holiday         SEASONS_AUTUMN     HOLIDAY_NO_HOLIDAY  
+              0.03466                     NA                     NA  
+               HOUR_0                 HOUR_8                HOUR_18  
+              0.10121                0.16870                0.14942  
+              HOUR_23   TEMPERATURE_HUMIDITY      TEMPERATURE_SOLAR  
+             -0.10808               -0.84022               -0.49611  
+ TEMPERATURE_RAINFALL       DEW_POINT_SPREAD  
+              0.75238                     NA  
+ 
+
+Fitting a linear regression model with all variables and polynomial terms ... 
+
+             Length Class      Mode
+lvl           0     -none-     NULL
+spec          7     linear_reg list
+fit          13     lm         list
+preproc       1     -none-     list
+elapsed       1     -none-     list
+censor_probs  0     -none-     list 
+
+Fitting an XGBoost model with weather features ... 
+
+parsnip model object
+
+##### xgb.Booster
+raw: 64.7 Kb 
+call:
+  xgboost::xgb.train(params = list(eta = 0.3, max_depth = 6, gamma = 0, 
+    colsample_bytree = 1, colsample_bynode = 1, min_child_weight = 1, 
+    subsample = 1), data = x$data, nrounds = 15, watchlist = x$watchlist, 
+    verbose = 0, nthread = 1, objective = "reg:squarederror")
+params (as set within xgb.train):
+  eta = "0.3", max_depth = "6", gamma = "0", colsample_bytree = "1", colsample_bynode = "1", min_child_weight = "1", subsample = "1", nthread = "1", objective = "reg:squarederror", validate_parameters = "TRUE"
+xgb.attributes:
+  niter
+callbacks:
+  cb.evaluation.log()
+# of features: 7 
+niter: 15
+nfeatures : 7 
+evaluation_log:
+    iter training_rmse
+       1    0.25522103
+       2    0.19599272
+---                   
+      14    0.09250042
+      15    0.09191011 
+
+Fitting an XGBoost model with weather features and polynomial terms ... 
+
+parsnip model object
+
+##### xgb.Booster
+raw: 64.7 Kb 
+call:
+  xgboost::xgb.train(params = list(eta = 0.3, max_depth = 6, gamma = 0, 
+    colsample_bytree = 1, colsample_bynode = 1, min_child_weight = 1, 
+    subsample = 1), data = x$data, nrounds = 15, watchlist = x$watchlist, 
+    verbose = 0, nthread = 1, objective = "reg:squarederror")
+params (as set within xgb.train):
+  eta = "0.3", max_depth = "6", gamma = "0", colsample_bytree = "1", colsample_bynode = "1", min_child_weight = "1", subsample = "1", nthread = "1", objective = "reg:squarederror", validate_parameters = "TRUE"
+xgb.attributes:
+  niter
+callbacks:
+  cb.evaluation.log()
+# of features: 7 
+niter: 15
+nfeatures : 7 
+evaluation_log:
+    iter training_rmse
+       1    0.25522103
+       2    0.19599272
+---                   
+      14    0.09250042
+      15    0.09191011 
+
+Fitting an XGBoost model with weather features, polynomial and engineered terms ... 
+
+parsnip model object
+
+##### xgb.Booster
+raw: 65.9 Kb 
+call:
+  xgboost::xgb.train(params = list(eta = 0.3, max_depth = 6, gamma = 0, 
+    colsample_bytree = 1, colsample_bynode = 1, min_child_weight = 1, 
+    subsample = 1), data = x$data, nrounds = 15, watchlist = x$watchlist, 
+    verbose = 0, nthread = 1, objective = "reg:squarederror")
+params (as set within xgb.train):
+  eta = "0.3", max_depth = "6", gamma = "0", colsample_bytree = "1", colsample_bynode = "1", min_child_weight = "1", subsample = "1", nthread = "1", objective = "reg:squarederror", validate_parameters = "TRUE"
+xgb.attributes:
+  niter
+callbacks:
+  cb.evaluation.log()
+# of features: 11 
+niter: 15
+nfeatures : 11 
+evaluation_log:
+    iter training_rmse
+       1    0.25535422
+       2    0.19590254
+---                   
+      14    0.09067275
+      15    0.08958482 
+
+Fitting an XGBoost model with all variables ... 
+
+parsnip model object
+
+##### xgb.Booster
+raw: 66 Kb 
+call:
+  xgboost::xgb.train(params = list(eta = 0.3, max_depth = 6, gamma = 0, 
+    colsample_bytree = 1, colsample_bynode = 1, min_child_weight = 1, 
+    subsample = 1), data = x$data, nrounds = 15, watchlist = x$watchlist, 
+    verbose = 0, nthread = 1, objective = "reg:squarederror")
+params (as set within xgb.train):
+  eta = "0.3", max_depth = "6", gamma = "0", colsample_bytree = "1", colsample_bynode = "1", min_child_weight = "1", subsample = "1", nthread = "1", objective = "reg:squarederror", validate_parameters = "TRUE"
+xgb.attributes:
+  niter
+callbacks:
+  cb.evaluation.log()
+# of features: 24 
+niter: 15
+nfeatures : 24 
+evaluation_log:
+    iter training_rmse
+       1    0.24895338
+       2    0.18290805
+---                   
+      14    0.05253178
+      15    0.05176263 
+
+Fitting an XGBoost model with all variables and polynomial terms ... 
+
+parsnip model object
+
+##### xgb.Booster
+raw: 66 Kb 
+call:
+  xgboost::xgb.train(params = list(eta = 0.3, max_depth = 6, gamma = 0, 
+    colsample_bytree = 1, colsample_bynode = 1, min_child_weight = 1, 
+    subsample = 1), data = x$data, nrounds = 15, watchlist = x$watchlist, 
+    verbose = 0, nthread = 1, objective = "reg:squarederror")
+params (as set within xgb.train):
+  eta = "0.3", max_depth = "6", gamma = "0", colsample_bytree = "1", colsample_bynode = "1", min_child_weight = "1", subsample = "1", nthread = "1", objective = "reg:squarederror", validate_parameters = "TRUE"
+xgb.attributes:
+  niter
+callbacks:
+  cb.evaluation.log()
+# of features: 24 
+niter: 15
+nfeatures : 24 
+evaluation_log:
+    iter training_rmse
+       1    0.24895338
+       2    0.18290805
+---                   
+      14    0.05253178
+      15    0.05176263 
+

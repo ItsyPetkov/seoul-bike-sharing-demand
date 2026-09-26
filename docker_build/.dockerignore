@@ -1,0 +1,63 @@
+# Git / IDE
+.git
+.gitignore
+.gitattributes
+.vscode/
+.idea/
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python / Node
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+env/
+ENV/
+node_modules/
+
+# Docker
+docker-compose.override.yml
+Dockerfile.dev
+
+# Tests / generated files
+coverage/
+.coverage/
+.pytest_cache/
+htmlcov/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.pid
+
+# CI
+.github/
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+
+# Archives / backups
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.iso
+backups/
+*.backup
+
+# Secrets
+.env.local
+.env.*.local
+secrets/
+
+# Do not send the Docker build context its own archive
+docker_build/*.zip

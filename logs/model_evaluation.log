@@ -1,0 +1,212 @@
+Commencing model evaluation pipeline construction: 
+
+----------------------------------- 
+
+Starting evaluation: lm_model_weather 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: lm_model_weather 
+
+# A tibble: 1 × 5
+  Model              RSQ  RMSE    MAE  MAPE
+  <chr>            <dbl> <dbl>  <dbl> <dbl>
+1 lm_model_weather 0.427 0.132 0.0998  176. 
+
+----------------------------------- 
+
+Starting evaluation: lm_model_weather_poly 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: lm_model_weather_poly 
+
+# A tibble: 1 × 5
+  Model                   RSQ  RMSE    MAE  MAPE
+  <chr>                 <dbl> <dbl>  <dbl> <dbl>
+1 lm_model_weather_poly 0.456 0.129 0.0980  164. 
+
+----------------------------------- 
+
+Starting evaluation: lm_model_weather_poly_interaction 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: lm_model_weather_poly_interaction 
+
+# A tibble: 1 × 5
+  Model                               RSQ  RMSE    MAE  MAPE
+  <chr>                             <dbl> <dbl>  <dbl> <dbl>
+1 lm_model_weather_poly_interaction 0.486 0.125 0.0933  147. 
+
+----------------------------------- 
+
+Starting evaluation: lm_model_all 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: lm_model_all 
+
+# A tibble: 1 × 5
+  Model          RSQ  RMSE    MAE  MAPE
+  <chr>        <dbl> <dbl>  <dbl> <dbl>
+1 lm_model_all 0.642 0.105 0.0804  193. 
+
+----------------------------------- 
+
+Starting evaluation: lm_model_all_poly 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: lm_model_all_poly 
+
+# A tibble: 1 × 5
+  Model               RSQ  RMSE    MAE  MAPE
+  <chr>             <dbl> <dbl>  <dbl> <dbl>
+1 lm_model_all_poly 0.652 0.103 0.0792  175. 
+
+----------------------------------- 
+
+Starting evaluation: xgb_model_weather 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: xgb_model_weather 
+
+# A tibble: 1 × 5
+  Model               RSQ  RMSE    MAE  MAPE
+  <chr>             <dbl> <dbl>  <dbl> <dbl>
+1 xgb_model_weather 0.642 0.104 0.0731  102. 
+
+----------------------------------- 
+
+Starting evaluation: xgb_model_weather_poly 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: xgb_model_weather_poly 
+
+# A tibble: 1 × 5
+  Model                    RSQ  RMSE   MAE  MAPE
+  <chr>                  <dbl> <dbl> <dbl> <dbl>
+1 xgb_model_weather_poly 0.344 0.167 0.138  360. 
+
+----------------------------------- 
+
+Starting evaluation: xgb_model_weather_poly_interaction 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: xgb_model_weather_poly_interaction 
+
+# A tibble: 1 × 5
+  Model                                RSQ  RMSE   MAE  MAPE
+  <chr>                              <dbl> <dbl> <dbl> <dbl>
+1 xgb_model_weather_poly_interaction 0.358 0.178 0.150  361. 
+
+----------------------------------- 
+
+Starting evaluation: xgb_model_all 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: xgb_model_all 
+
+# A tibble: 1 × 5
+  Model           RSQ   RMSE    MAE  MAPE
+  <chr>         <dbl>  <dbl>  <dbl> <dbl>
+1 xgb_model_all 0.867 0.0636 0.0418  70.0 
+
+----------------------------------- 
+
+Starting evaluation: xgb_model_all_poly 
+
+Generating predictions... 
+
+Calculating R-squared... 
+
+Calculating RMSE... 
+
+Calculating MAE... 
+
+Calculating MAPE... 
+
+Completed evaluation: xgb_model_all_poly 
+
+# A tibble: 1 × 5
+  Model                RSQ  RMSE    MAE  MAPE
+  <chr>              <dbl> <dbl>  <dbl> <dbl>
+1 xgb_model_all_poly 0.599 0.128 0.0973  194. 
+

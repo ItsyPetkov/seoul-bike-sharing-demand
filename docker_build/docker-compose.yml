@@ -1,0 +1,299 @@
+# Docker Compose Configuration - Seoul Bike-Sharing with Shiny & Airflow
+
+services:
+
+  # ============================================================
+  # SHINY APPLICATION
+  # ============================================================
+
+  shiny-app:
+    build:
+      context: ..
+      dockerfile: docker_build/Dockerfile
+
+    image: seoul-bike-sharing:latest
+    container_name: seoul-bike-shiny
+
+    ports:
+      - "3838:3838"
+
+    volumes:
+      - shiny-logs:/app/R_and_IBM_Cloud/logs
+      - shiny-checkpoints:/app/R_and_IBM_Cloud/checkpoints
+      - shiny-data-raw:/app/R_and_IBM_Cloud/data_raw
+      - shiny-data-preprocessed:/app/R_and_IBM_Cloud/data_preprocessed
+      - shiny-features:/app/R_and_IBM_Cloud/features
+      - shiny-models:/app/R_and_IBM_Cloud/models
+
+    environment:
+      R_HOME: /usr/local/lib/R
+      SHINY_LOG_LEVEL: INFO
+      TZ: UTC
+
+    restart: unless-stopped
+
+    networks:
+      - seoul-bike-network
+
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3838/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+
+  # ============================================================
+  # POSTGRES DATABASE AIRFLOW
+  # ============================================================
+
+  postgres:
+    image: postgres:16
+    container_name: seoul-bike-airflow-postgres
+
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+
+    volumes:
+      - airflow-postgres:/var/lib/postgresql/data
+
+    networks:
+      - seoul-bike-network
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  # ============================================================
+  # AIRFLOW INITIALIZATION
+  # ============================================================
+
+  airflow-init:
+    image: apache/airflow:2.10.5
+    container_name: seoul-bike-airflow-init
+
+    user: "0:0"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: >-
+        postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+
+    volumes:
+      - ../airflow/dags:/opt/airflow/dags
+      - airflow-logs:/opt/airflow/logs
+      - ../airflow/plugins:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    networks:
+      - seoul-bike-network
+
+    command:
+      - bash
+      - -c
+      - |
+        airflow db migrate
+        airflow users create \
+          --username admin \
+          --password admin \
+          --firstname Admin \
+          --lastname User \
+          --role Admin \
+          --email admin@example.com || true
+
+
+  # ============================================================
+  # AIRFLOW WEBSERVER
+  # ============================================================
+
+  airflow-webserver:
+    image: apache/airflow:2.10.5
+    container_name: seoul-bike-airflow-webserver
+
+    user: "0:0"
+
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: >-
+        postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+
+    volumes:
+      - ../airflow/dags:/opt/airflow/dags
+      - airflow-logs:/opt/airflow/logs
+      - ../airflow/plugins:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    networks:
+      - seoul-bike-network
+
+    command: webserver
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+
+  # ============================================================
+  # AIRFLOW SCHEDULER
+  # ============================================================
+
+  airflow-scheduler:
+    image: apache/airflow:2.10.5
+    container_name: seoul-bike-airflow-scheduler
+
+    user: "0:0"
+
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
+    environment:
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: >-
+        postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+
+    volumes:
+      - ../airflow/dags:/opt/airflow/dags
+      - airflow-logs:/opt/airflow/logs
+      - ../airflow/plugins:/opt/airflow/plugins
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    networks:
+      - seoul-bike-network
+
+    command: scheduler
+
+    restart: unless-stopped
+
+  # ============================================================
+  # POSTGRES DATABASE MLFLOW
+  # ============================================================
+
+  mlflow-postgres:
+    image: postgres:16
+    container_name: seoul-bike-mlflow-postgres
+    environment:
+      POSTGRES_USER: mlflow
+      POSTGRES_PASSWORD: mlflow
+      POSTGRES_DB: mlflow
+    volumes:
+      - mlflow-postgres:/var/lib/postgresql/data
+    networks:
+      - seoul-bike-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mlflow -d mlflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # MLFLOW SETUP
+  # ============================================================
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: seoul-bike-mlflow
+    depends_on:
+      mlflow-postgres:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    environment:
+      MLFLOW_HOST: 0.0.0.0
+    volumes:
+      - mlflow-artifacts:/mlartifacts
+    networks:
+      - seoul-bike-network
+    command:
+      - bash
+      - -c
+      - |
+        pip install --no-cache-dir psycopg2-binary
+        mlflow server \
+          --host 0.0.0.0 \
+          --port 5000 \
+          --allowed-hosts "mlflow:5000,localhost:5000,127.0.0.1:5000" \
+          --backend-store-uri postgresql://mlflow:mlflow@mlflow-postgres:5432/mlflow \
+          --artifacts-destination /mlartifacts
+    restart: unless-stopped
+
+
+# ============================================================
+# VOLUMES
+# ============================================================
+
+volumes:
+
+  # Shiny
+  shiny-logs:
+    name: seoul-bike-logs
+
+  shiny-checkpoints:
+    name: seoul-bike-checkpoints
+
+  shiny-data-raw:
+    name: seoul-bike-data-raw
+
+  shiny-data-preprocessed:
+    name: seoul-bike-data-preprocessed
+
+  shiny-features:
+    name: seoul-bike-features
+
+  shiny-models:
+    name: seoul-bike-models
+
+  # Airflow
+  airflow-postgres:
+    name: seoul-bike-airflow-postgres
+
+  airflow-logs:
+    name: seoul-bike-airflow-logs
+
+  # MLflow
+  mlflow-postgres:
+    name: seoul-bike-mlflow-postgres
+
+  mlflow-artifacts:
+    name: seoul-bike-mlflow-artifacts
+
+
+# ============================================================
+# NETWORK
+# ============================================================
+
+networks:
+
+  seoul-bike-network:
+    name: seoul-bike-network
+    driver: bridge
