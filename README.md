@@ -284,10 +284,6 @@ Seven regression models are implemented and systematically compared:
  
 All models are trained on an 80/20 stratified train-test split (7,008 training rows, 1,752 test rows) using a fixed random seed (42) for reproducibility. Training configurations for each model—including regularization parameters, tree depths, and learning rates—are stored in a YAML configuration file that documents the exact hyperparameters used for each model version.
  
-### Hyperparameter Tuning
- 
-The three best-performing models (Random Forest, Gradient Boosting, and Decision Tree) undergo additional hyperparameter optimization via grid search with 5-fold cross-validation. For Random Forest, the number of variables sampled at each split (mtry) is tuned across values 3, 5, 7, and 10, while minimum node size is tested at 5, 10, and 15. For Gradient Boosting, the search explores different numbers of trees (100, 200, 300), interaction depths (3, 5, 7), learning rates or shrinkage values (0.01, 0.05, 0.1), and minimum observations per node (5, 10). The configuration delivering the best cross-validated performance is selected as the final model.
- 
 ---
  
 ## Deployment and Orchestration
