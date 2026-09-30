@@ -335,36 +335,6 @@ The pipeline can be executed through multiple pathways: via the Airflow web UI b
  
 ---
  
-## Key Files and Modules
- 
-### Main R Scripts
- 
-| Script | Purpose |
-|--------|---------|
-| `scripts/preprocess.R` | Data cleaning, validation, feature engineering |
-| `scripts/train_model.R` | Model training & hyperparameter tuning |
-| `scripts/evaluate_model.R` | Model evaluation, metrics, comparison |
-| `scripts/mlflow_logging.R` | Experiment tracking & artifact management |
-| `scripts/utils.R` | Helper functions (metrics, plotting, I/O) |
- 
-### SQL Files
- 
-| Script | Purpose |
-|--------|---------|
-| `sql/schema.sql` | SQLite table definitions with constraints |
-| `sql/data_quality_checks.sql` | Validation & audit queries |
-| `sql/feature_views.sql` | Pre-computed feature aggregations |
- 
-### Airflow DAGs
- 
-| DAG | Schedule | Inputs | Outputs |
-|-----|----------|--------|---------|
-| `data_ingestion_dag.R` | Manual | SeoulBikeData.csv | bikes_raw table |
-| `preprocessing_dag.R` | After ingestion | bikes_raw table | bikes_cleaned table |
-| `training_dag.R` | Daily @ 2 AM | bikes_cleaned table | best_model.rds, metrics |
- 
----
- 
 ## Conclusions and Recommendations
  
 ### Key Findings
